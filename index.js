@@ -89,7 +89,7 @@ const checkUser = async (ok, ctx) => {
     return ctx.from.username === user.username;
   });
   if (!findUser[0]) {
-    ctx.reply("Чтобы стать участников проекта #PROJECT21 обращайтесь с @danbazarbekov");
+    ctx.reply("Чтобы стать участников проекта #PROJECT21 обращайтесь к @danbazarbekov");
     return false;
   } else {
     return true;
