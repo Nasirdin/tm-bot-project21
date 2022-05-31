@@ -415,7 +415,7 @@ bot.action(`clock`, async (ctx) => {
   }
 });
 
-cron.schedule("15 2 * * *", async () => {
+cron.schedule("0 6 * * *", async () => {
   const users = await rFile();
   users.map((user) => {
     textOfTheDay == 21 ? 0 : (textOfTheDay = +1);
