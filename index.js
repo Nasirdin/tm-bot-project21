@@ -1,6 +1,8 @@
 const { Telegraf, Markup } = require("telegraf");
 const cron = require("node-cron");
 const channelId = "-1001540449203";
+require("dotenv").config();
+const { readFile, writeFile, unLink } = require("fs").promises;
 
 const commands = `
 /start - Перезапустить бота
