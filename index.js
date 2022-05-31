@@ -1,6 +1,3 @@
-const { Telegraf, Markup } = require("telegraf");
-require("dotenv").config();
-const { readFile, writeFile, unLink } = require("fs").promises;
 const cron = require("node-cron");
 const channelId = "-1001540449203";
 
@@ -396,7 +393,7 @@ bot.action(`clock`, async (ctx) => {
   }
 });
 
-cron.schedule("0 6 * * *", async () => {
+cron.schedule("0 0 * * *", async () => {
   const users = await rFile();
   users.map((user) => {
     textOfTheDay == 21 ? 0 : (textOfTheDay = +1);
