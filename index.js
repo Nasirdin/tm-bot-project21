@@ -4,6 +4,23 @@ const channelId = "-1001540449203";
 require("dotenv").config();
 const { readFile, writeFile, unLink } = require("fs").promises;
 
+let userArray = [
+  {
+    userId: 2,
+    chatId: 979996413,
+    username: "danbazarbekov",
+    bonus: 0,
+    timeOutTraining: true,
+    timeOutFood: true,
+    timeOutClock: true,
+  },
+];
+
+let listUser = [
+  { userId: 1, username: "Nasirdin1" },
+  { userId: 2, username: "danbazarbekov" },
+];
+
 const commands = `
 /start - Перезапустить бота
 /help - Помощь
@@ -85,7 +102,7 @@ bot.start(async (ctx) => {
     const findUser = await checkUser(ok, ctx);
     if (findUser) {
       ctx.reply(`Я чат-бот #PROJECT21: и я твой персональный помощник на следующие 21-дней`);
-      const users = await rFile();
+      // const users = await rFile();
       const username = ctx.message.from.username;
       const chatId = ctx.message.chat.id;
       const newUser = {
@@ -96,24 +113,24 @@ bot.start(async (ctx) => {
         timeOutFood: true,
         timeOutClock: true,
       };
-      if (!users[0]) {
+      if (!userArray[0]) {
         const newUsers = [{ userId: 1, ...newUser }];
         wFile(newUsers);
       } else {
         let findUser = false;
-        users.filter((element) => {
+        userArray.filter((element) => {
           if (element.username === username) {
             findUser = true;
           }
         });
         if (!findUser) {
-          const newArr = users.map((el) => {
+          const newArr = userArray.map((el) => {
             return el.userId;
           });
           userId = Math.max(...newArr) + 1;
 
-          const newUsers = [...users, { userId, ...newUser }];
-          wFile(newUsers);
+          const newUsers = [...userArray, { userId, ...newUser }];
+          userArray = newUsers;
         }
       }
     } else {
@@ -245,6 +262,8 @@ ${help}`);
 });
 
 bot.command("mypoints", async (ctx) => {
+  console.log(userArray);
+
   try {
     let ok = false;
 
@@ -309,23 +328,23 @@ bot.on("video", async (ctx) => {
 });
 
 const timeOut = (ctx, users) => {
-    const timeOut = users.map((element) => {
-      if (element.username === ctx.from.username) {
-        const newBonus = {
-          userId: element.userId,
-          chatId: element.chatId,
-          username: element.username,
-          bonus: element.bonus + 1,
-          timeOutTraining: true,
-          timeOutFood: true,
-          timeOutClock: true,
-        };
-        return newBonus;
-      } else {
-        return element;
-      }
-    });
-    wFile(timeOut);
+  const timeOut = users.map((element) => {
+    if (element.username === ctx.from.username) {
+      const newBonus = {
+        userId: element.userId,
+        chatId: element.chatId,
+        username: element.username,
+        bonus: element.bonus + 1,
+        timeOutTraining: true,
+        timeOutFood: true,
+        timeOutClock: true,
+      };
+      return newBonus;
+    } else {
+      return element;
+    }
+  });
+  wFile(timeOut);
 };
 const report = async (users, ctx, type) => {
   try {
@@ -349,7 +368,7 @@ const report = async (users, ctx, type) => {
     });
     wFile(addBonus);
     cron.schedule("0 5 * * *", async () => {
-        timeOut(ctx, users, type);
+      timeOut(ctx, users, type);
     });
   } catch (error) {
     console.error(error);
@@ -396,7 +415,7 @@ bot.action(`clock`, async (ctx) => {
   }
 });
 
-cron.schedule("0 0 * * *", async () => {
+cron.schedule("0 2 * * *", async () => {
   const users = await rFile();
   users.map((user) => {
     textOfTheDay == 21 ? 0 : (textOfTheDay = +1);
