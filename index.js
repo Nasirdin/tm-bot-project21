@@ -145,7 +145,7 @@ bot.command("allreports", async (ctx) => {
     if (ctx.from.username === "danbazarbekov" || ctx.from.username === "Nasirdin1") {
       const users = await rFile();
       const a = users.map((e) => {
-        return `${e.username} - ${e.bonus} балл`;
+        return `@${e.username} - ${e.bonus} балл`;
       });
       ctx.reply(`Данные участников
   
