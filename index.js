@@ -32,7 +32,7 @@ const commands = `
 
 `;
 
-let textOfTheDay = 21;
+let textOfTheDay = 1;
 
 const wordsForEveryDay = [
   "- Не могу дождаться, чтобы собрать тусовку в эти выходные",
