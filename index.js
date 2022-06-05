@@ -32,8 +32,6 @@ const commands = `
 
 `;
 
-let textOfTheDay = 21;
-
 const wordsForEveryDay = [
   "- Не могу дождаться, чтобы собрать тусовку в эти выходные",
   "- А если бы мы сейчас держались за руки 😏",
@@ -414,12 +412,17 @@ bot.action(`clock`, async (ctx) => {
     report(users, ctx, type);
   }
 });
+let textOfTheDay = 21;
 
 cron.schedule("0 6 * * *", async () => {
   const users = await rFile();
+  if (textOfTheDay == 21) {
+    textOfTheDay = 0;
+  } else {
+    textOfTheDay += 1;
+  }
   users.map((user) => {
-    textOfTheDay == 21 ? 0 : (textOfTheDay = +1);
-    bot.telegram.sendMessage(user.chatId, wordsForEveryDay[textOfTheDay]);
+    bot.telegram.sendMessage(user.chatId, !wordsForEveryDay[textOfTheDay] ? wordsForEveryDay[7] : wordsForEveryDay[textOfTheDay]);
   });
 });
 
