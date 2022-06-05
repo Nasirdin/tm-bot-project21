@@ -15,12 +15,6 @@ let userArray = [
     timeOutClock: true,
   },
 ];
-
-let listUser = [
-  { userId: 1, username: "Nasirdin1" },
-  { userId: 2, username: "danbazarbekov" },
-];
-
 const commands = `
 /start - Перезапустить бота
 /help - Помощь
@@ -162,6 +156,11 @@ bot.command("add", async (ctx) => {
   try {
     if (ctx.from.username === "danbazarbekov" || ctx.from.username === "Nasirdin1") {
       const message = ctx.message.text.split(" ");
+      if (message.length <= 1) {
+        ctx.reply(`Проверьте правильность написания.
+Пример: /add danbazarbekov`);
+        return false;
+      }
       const users = await rNFile();
       if (!users[0]) {
         const newUsers = [{ userId: "1" * 1, username: message[1] }];
@@ -422,7 +421,10 @@ cron.schedule("0 6 * * *", async () => {
     textOfTheDay += 1;
   }
   users.map((user) => {
-    bot.telegram.sendMessage(user.chatId, !wordsForEveryDay[textOfTheDay] ? wordsForEveryDay[7] : wordsForEveryDay[textOfTheDay]);
+    bot.telegram.sendMessage(
+      user.chatId,
+      !wordsForEveryDay[textOfTheDay] ? wordsForEveryDay[7] : wordsForEveryDay[textOfTheDay]
+    );
   });
 });
 
