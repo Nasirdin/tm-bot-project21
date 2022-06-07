@@ -94,7 +94,7 @@ bot.start(async (ctx) => {
     const findUser = await checkUser(ok, ctx);
     if (findUser) {
       ctx.reply(`Я чат-бот #PROJECT21: и я твой персональный помощник на следующие 21-дней`);
-      // const users = await rFile();
+      const users = await rFile();
       const username = ctx.message.from.username;
       const chatId = ctx.message.chat.id;
       const newUser = {
@@ -105,24 +105,24 @@ bot.start(async (ctx) => {
         timeOutFood: true,
         timeOutClock: true,
       };
-      if (!userArray[0]) {
+      if (!users[0]) {
         const newUsers = [{ userId: 1, ...newUser }];
         wFile(newUsers);
       } else {
         let findUser = false;
-        userArray.filter((element) => {
+        users.filter((element) => {
           if (element.username === username) {
             findUser = true;
           }
         });
         if (!findUser) {
-          const newArr = userArray.map((el) => {
+          const newArr = users.map((el) => {
             return el.userId;
           });
           userId = Math.max(...newArr) + 1;
 
-          const newUsers = [...userArray, { userId, ...newUser }];
-          userArray = newUsers;
+          const newUsers = [...users, { userId, ...newUser }];
+          wFile(newUsers);
         }
       }
     } else {
@@ -411,7 +411,7 @@ bot.action(`clock`, async (ctx) => {
     report(users, ctx, type);
   }
 });
-let textOfTheDay = 21;
+let textOfTheDay = 10;
 
 cron.schedule("0 6 * * *", async () => {
   const users = await rFile();
