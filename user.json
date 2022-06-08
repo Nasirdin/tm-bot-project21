@@ -16,5 +16,16 @@
     "timeOutTraining": true,
     "timeOutFood": true,
     "timeOutClock": true
+  },
+  {
+    "userId": 3,
+    "chatId": 979996413,
+    "username": "danbazarbekov",
+    "bonus": 1,
+    "timeOutTraining": true,
+    "timeOutFood": true,
+    "timeOutClock": true
   }
 ]
+
+
