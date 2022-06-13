@@ -413,7 +413,7 @@ bot.action(`clock`, async (ctx) => {
 });
 let textOfTheDay = 15;
 
-cron.schedule("* * * * *", async () => {
+cron.schedule("*/2 * * * *", async () => {
   const users = await rFile();
   if (textOfTheDay == 21) {
     textOfTheDay = 0;
