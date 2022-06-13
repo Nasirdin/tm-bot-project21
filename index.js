@@ -411,9 +411,9 @@ bot.action(`clock`, async (ctx) => {
     report(users, ctx, type);
   }
 });
-let textOfTheDay = 10;
+let textOfTheDay = 15;
 
-cron.schedule("0 6 * * *", async () => {
+cron.schedule("* * * * *", async () => {
   const users = await rFile();
   if (textOfTheDay == 21) {
     textOfTheDay = 0;
@@ -431,3 +431,25 @@ cron.schedule("0 6 * * *", async () => {
 bot.launch();
 process.once("SIGINT", () => bot.stop("SIGINT"));
 process.once("SIGTERM", () => bot.stop("SIGTERM"));
+
+
+// [
+//   {
+//     "userId": 1,
+//     "chatId": 654924716,
+//     "username": "Nasirdin1",
+//     "bonus": 0,
+//     "timeOutTraining": true,
+//     "timeOutFood": true,
+//     "timeOutClock": true
+//   },
+//   {
+//     "userId": 2,
+//     "chatId": 979996413,
+//     "username": "danbazarbekov",
+//     "bonus": 1,
+//     "timeOutTraining": true,
+//     "timeOutFood": true,
+//     "timeOutClock": true
+//   }
+// ]
