@@ -375,7 +375,7 @@ const report = async (users, ctx, type) => {
       }
     });
     wFile(addBonus);
-    cron.schedule("0 6 * * *", async () => {
+    cron.schedule("10 14 * * *", async () => {
       timeOut(ctx, users, type);
       // const users = await rFile();
       // if (textOfTheDay == 21) {
@@ -436,7 +436,7 @@ bot.action(`clock`, async (ctx) => {
 });
 let textOfTheDay = 15;
 
-cron.schedule("* * * * *", async () => {
+cron.schedule("5 14 * * *", async () => {
   const users = await rFile();
   if (textOfTheDay == 21) {
     textOfTheDay = 0;
