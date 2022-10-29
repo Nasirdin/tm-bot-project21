@@ -270,8 +270,6 @@ ${help}`);
 });
 
 bot.command("mypoints", async (ctx) => {
-  console.log(userArray);
-
   try {
     let ok = false;
 
