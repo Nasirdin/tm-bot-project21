@@ -1,3 +1,14 @@
+// { "userId": 1, "username": "abda1iev_n" },
+//   { "userId": 2, "username": "danbazarbekov" }
+// {
+//   "userId": 2,
+//   "chatId": 979996413,
+//   "username": "danbazarbekov",
+//   "bonus": 1,
+//   "timeOutTraining": true,
+//   "timeOutFood": true,
+//   "timeOutClock": true
+// }
 const { Telegraf, Markup } = require("telegraf");
 const cron = require("node-cron");
 const channelId = "-1001540449203";
@@ -366,18 +377,18 @@ const report = async (users, ctx, type) => {
     wFile(addBonus);
     cron.schedule("0 6 * * *", async () => {
       timeOut(ctx, users, type);
-      const users = await rFile();
-      if (textOfTheDay == 21) {
-        textOfTheDay = 0;
-      } else {
-        textOfTheDay += 1;
-      }
-      users.map((user) => {
-        bot.telegram.sendMessage(
-          user.chatId,
-          !wordsForEveryDay[textOfTheDay] ? wordsForEveryDay[7] : wordsForEveryDay[textOfTheDay]
-        );
-      });
+      // const users = await rFile();
+      // if (textOfTheDay == 21) {
+      //   textOfTheDay = 0;
+      // } else {
+      //   textOfTheDay += 1;
+      // }
+      // users.map((user) => {
+      //   bot.telegram.sendMessage(
+      //     user.chatId,
+      //     !wordsForEveryDay[textOfTheDay] ? wordsForEveryDay[7] : wordsForEveryDay[textOfTheDay]
+      //   );
+      // });
     });
   } catch (error) {
     console.error(error);
@@ -425,20 +436,20 @@ bot.action(`clock`, async (ctx) => {
 });
 let textOfTheDay = 15;
 
-// cron.schedule("0 6 * * *", async () => {
-//   const users = await rFile();
-//   if (textOfTheDay == 21) {
-//     textOfTheDay = 0;
-//   } else {
-//     textOfTheDay += 1;
-//   }
-//   users.map((user) => {
-//     bot.telegram.sendMessage(
-//       user.chatId,
-//       !wordsForEveryDay[textOfTheDay] ? wordsForEveryDay[7] : wordsForEveryDay[textOfTheDay]
-//     );
-//   });
-// });
+cron.schedule("* * * * *", async () => {
+  const users = await rFile();
+  if (textOfTheDay == 21) {
+    textOfTheDay = 0;
+  } else {
+    textOfTheDay += 1;
+  }
+  users.map((user) => {
+    bot.telegram.sendMessage(
+      user.chatId,
+      !wordsForEveryDay[textOfTheDay] ? wordsForEveryDay[7] : wordsForEveryDay[textOfTheDay]
+    );
+  });
+});
 
 bot.launch();
 process.once("SIGINT", () => bot.stop("SIGINT"));
