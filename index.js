@@ -84,7 +84,7 @@ const checkUser = async (ok, ctx) => {
     return ctx.from.username === user.username;
   });
   if (!findUser[0]) {
-    ctx.reply("Чтобы стать участников проекта #PROJECT21 обращайтесь к @danbazarbekov");
+    ctx.reply("Чтобы стать участников проекта #Project pro обращайтесь к @danbazarbekov");
     return false;
   } else {
     return true;
@@ -96,7 +96,7 @@ bot.start(async (ctx) => {
     let ok = false;
     const findUser = await checkUser(ok, ctx);
     if (findUser) {
-      ctx.reply(`Я чат-бот #PROJECT21: и я твой персональный помощник на следующие 21-дней`);
+      ctx.reply(`Я чат-бот #Project pro: и я твой персональный помощник на следующие дни`);
       const users = await rFile();
       const username = ctx.message.from.username;
       const chatId = ctx.message.chat.id;
