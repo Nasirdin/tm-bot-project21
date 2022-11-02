@@ -3,7 +3,7 @@
 
 const { Telegraf, Markup } = require("telegraf");
 const cron = require("node-cron");
-const channelId = "-837381164";
+const channelId = "-1001854007813,";
 require("dotenv").config();
 const { readFile, writeFile, unLink } = require("fs").promises;
 
