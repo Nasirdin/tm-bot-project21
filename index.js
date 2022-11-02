@@ -96,7 +96,7 @@ bot.start(async (ctx) => {
     let ok = false;
     const findUser = await checkUser(ok, ctx);
     if (findUser) {
-      ctx.reply(`Я чат-бот #Project pro: и я твой персональный помощник на следующие дни`);
+      ctx.reply(`Я чат-бот #Project pro и я твой персональный помощник на следующие дни`);
       const users = await rFile();
       const username = ctx.message.from.username;
       const chatId = ctx.message.chat.id;
