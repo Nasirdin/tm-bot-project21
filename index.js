@@ -1,17 +1,9 @@
 // { "userId": 1, "username": "abda1iev_n" },
 //   { "userId": 2, "username": "danbazarbekov" }
-// {
-//   "userId": 2,
-//   "chatId": 979996413,
-//   "username": "danbazarbekov",
-//   "bonus": 1,
-//   "timeOutTraining": true,
-//   "timeOutFood": true,
-//   "timeOutClock": true
-// }
+
 const { Telegraf, Markup } = require("telegraf");
 const cron = require("node-cron");
-const channelId = "-1001540449203";
+const channelId = "-837381164";
 require("dotenv").config();
 const { readFile, writeFile, unLink } = require("fs").promises;
 
@@ -333,9 +325,9 @@ bot.on("video", async (ctx) => {
   }
 });
 
-const timeOut = (ctx, users) => {
+const timeOut = async () => {
+  const users = await rFile();
   const timeOut = users.map((element) => {
-    if (element.username === ctx.from.username) {
       const newBonus = {
         userId: element.userId,
         chatId: element.chatId,
@@ -346,9 +338,6 @@ const timeOut = (ctx, users) => {
         timeOutClock: true,
       };
       return newBonus;
-    } else {
-      return element;
-    }
   });
   wFile(timeOut);
 };
@@ -373,21 +362,6 @@ const report = async (users, ctx, type) => {
       }
     });
     wFile(addBonus);
-    cron.schedule("0 6 * * *", async () => {
-      timeOut(ctx, users, type);
-      // const users = await rFile();
-      // if (textOfTheDay == 21) {
-      //   textOfTheDay = 0;
-      // } else {
-      //   textOfTheDay += 1;
-      // }
-      // users.map((user) => {
-      //   bot.telegram.sendMessage(
-      //     user.chatId,
-      //     !wordsForEveryDay[textOfTheDay] ? wordsForEveryDay[7] : wordsForEveryDay[textOfTheDay]
-      //   );
-      // });
-    });
   } catch (error) {
     console.error(error);
   }
@@ -398,7 +372,6 @@ bot.action(`training`, async (ctx) => {
   const userArray = users.filter((e) => {
     return e.username === ctx.from.username;
   });
-
   if (!userArray[0].timeOutTraining) {
     await ctx.replyWithHTML("Вы уже отправили отчет о тренировке!");
   } else {
@@ -447,6 +420,9 @@ cron.schedule("0 6 * * *", async () => {
       !wordsForEveryDay[textOfTheDay] ? wordsForEveryDay[7] : wordsForEveryDay[textOfTheDay]
     );
   });
+});
+cron.schedule("0 5 * * *", async () => {
+  timeOut();
 });
 
 bot.launch();
